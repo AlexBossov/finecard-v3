@@ -2,14 +2,15 @@
   <div>
     <slot>
       <div>
-        <LeftNavBar/>
         <v-container fluid fill-height>
           <v-layout align-center justify-center>
-            <v-flex xs12 sm8 md4>
+            <v-flex xs12 sm8 md7>
               <v-card class="elevation-12">
                 <v-toolbar color="indigo accent-2">
                   <v-spacer></v-spacer>
-                  <v-toolbar-title>Welcome</v-toolbar-title>
+                  <v-toolbar-title>
+                    Welcome
+                  </v-toolbar-title>
                   <v-spacer></v-spacer>
                 </v-toolbar>
                 <v-card-text>
@@ -22,7 +23,7 @@
                     />
                     <v-text-field
                         v-model="password"
-                        :rules="nameRules"
+                        :rules="passwordRules"
                         :counter="10"
                         label="Пароль"
                         required
@@ -31,11 +32,11 @@
                 </v-card-text>
                 <v-card-text>
                   Don’t have an account?
-                  <a>Sign up</a>
+                  <a @click="$emit('changeFormType', 'register')">Sign up</a>
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="indigo accent-2" to="/locations">Login</v-btn>
+                  <v-btn color="indigo accent-2" to="/location">Login</v-btn>
                 </v-card-actions>
               </v-card>
             </v-flex>
@@ -47,24 +48,22 @@
 </template>
 
 <script>
-import LeftNavBar from "@/components/leftNavBar/LeftNavBar";
 
 export default {
   name: "LoginForm",
-  components: {LeftNavBar},
   data() {
     return {
-      email: "bosov2012@yandex.ru",
-      password: "1234",
+      email: '',
+      password: '',
       valid: false,
-      nameRules: [
-        v => !!v || 'Name is required',
-        v => v.length <= 10 || 'Name must be less than 10 characters',
+      passwordRules: [
+        v => !!v || 'Пароль обязателен',
+        v => v.length >= 6 || 'Пароль должен быть больше 6 символов',
       ],
       emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+/.test(v) || 'E-mail must be valid',
-      ]
+        v => !!v || 'E-mail обязателен',
+        v => /.+@.+/.test(v) || 'E-mail должен быть вылидный',
+      ],
     }
   },
 }

@@ -1,14 +1,15 @@
 <template>
-    <Navbar></Navbar>
+  <Navbar>
+
+  </Navbar>
 </template>
 
 <script>
-
-
 import Navbar from "@/components/navbar/Navbar";
+
 export default {
-  name: "Location",
-  components: {Navbar},
+  name: "Statistics",
+  components: {Navbar}
 }
 </script>
 

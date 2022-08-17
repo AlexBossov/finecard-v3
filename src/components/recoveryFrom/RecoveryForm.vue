@@ -2,7 +2,6 @@
   <div>
     <slot>
       <div>
-        <LeftNavBar/>
         <v-container fluid fill-height>
           <v-layout align-center justify-center>
             <v-flex xs12 sm8 md4>
@@ -48,11 +47,9 @@
 </template>
 
 <script>
-import LeftNavBar from "@/components/leftNavBar/LeftNavBar";
 
 export default {
   name: "RecoveryForm",
-  components: {LeftNavBar},
   data() {
     return {
       email: "bosov2012@yandex.ru",
