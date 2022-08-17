@@ -6,9 +6,9 @@
           <v-layout align-center justify-center>
             <v-flex xs12 sm8 md4>
               <v-card class="elevation-12">
-                <v-toolbar color="indigo accent-2">
+                <v-toolbar color="blue darken-1">
                   <v-spacer></v-spacer>
-                  <v-toolbar-title>Welcome</v-toolbar-title>
+                  <v-toolbar-title class="white--text">Welcome</v-toolbar-title>
                   <v-spacer></v-spacer>
                 </v-toolbar>
                 <v-card-text>
@@ -34,7 +34,7 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="indigo accent-2" to="/locations">Login</v-btn>
+                  <v-btn class="white--text blue darken-1" to="/locations">Login</v-btn>
                 </v-card-actions>
               </v-card>
             </v-flex>

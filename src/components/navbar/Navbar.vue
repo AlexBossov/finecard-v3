@@ -9,7 +9,7 @@
       <v-spacer></v-spacer>
     </v-toolbar>
 
-    <v-navigation-drawer app v-model="drawer" style="background-color: #1E90FF">
+    <v-navigation-drawer app v-model="drawer" style="background-color: #1E88E5">
       <v-list>
         <v-list-item v-for="link in links" :key="link.text" router :to="link.route">
           <v-icon class="white--text">{{ link.icon }}</v-icon>
@@ -21,7 +21,14 @@
 </template>
 
 <script>
-import {mdiAccount, mdiAccountCircle, mdiCalendarMonth, mdiHomeGroup, mdiTuneVariant} from "@mdi/js";
+import {
+  mdiAccount,
+  mdiAccountCircle,
+  mdiCalendarMonth,
+  mdiHomeGroup,
+  mdiTuneVariant,
+  mdiExitToApp,
+} from "@mdi/js";
 
 export default {
   name: "Navbar",
@@ -34,6 +41,7 @@ export default {
         {icon: mdiHomeGroup, text: 'Локации', route: '/locations'},
         {icon: mdiAccount, text: 'Сотрудники', route: '/employees'},
         {icon: mdiTuneVariant, text: 'Настройки', route: '/settings'},
+        {icon: mdiExitToApp, text: 'Выйти из аккаунта', route: '/finecard'},
       ],
     }
   },
