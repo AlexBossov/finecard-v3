@@ -36,7 +36,7 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn class="white--text blue darken-1" to="/locations">Login</v-btn>
+                  <v-btn class="white--text blue darken-1" to="/employees">Login</v-btn>
                 </v-card-actions>
               </v-card>
             </v-flex>
