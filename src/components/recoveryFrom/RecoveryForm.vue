@@ -4,11 +4,11 @@
       <div>
         <v-container fluid fill-height>
           <v-layout align-center justify-center>
-            <v-flex xs12 sm8 md4>
+            <v-flex xs12 sm8 md7>
               <v-card class="elevation-12">
                 <v-toolbar color="blue darken-1">
                   <v-spacer></v-spacer>
-                  <v-toolbar-title class="white--text">Welcome</v-toolbar-title>
+                  <v-toolbar-title class="white--text">Восстановление пароля</v-toolbar-title>
                   <v-spacer></v-spacer>
                 </v-toolbar>
                 <v-card-text>
@@ -19,22 +19,12 @@
                         label="E-mail"
                         required
                     />
-                    <v-text-field
-                        v-model="password"
-                        :rules="nameRules"
-                        :counter="10"
-                        label="Пароль"
-                        required
-                    />
                   </v-form>
                 </v-card-text>
-                <v-card-text>
-                  Don’t have an account?
-                  <a>Sign up</a>
-                </v-card-text>
+                <v-card-text>Введите ваш email и мы отправим вам новый пароль</v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn class="white--text blue darken-1" to="/locations">Login</v-btn>
+                  <v-btn class="white--text blue darken-1" @click="$emit('changeFormType', 'login')">Отправить</v-btn>
                 </v-card-actions>
               </v-card>
             </v-flex>
@@ -55,10 +45,6 @@ export default {
       email: "bosov2012@yandex.ru",
       password: "1234",
       valid: false,
-      nameRules: [
-        v => !!v || 'Name is required',
-        v => v.length <= 10 || 'Name must be less than 10 characters',
-      ],
       emailRules: [
         v => !!v || 'E-mail is required',
         v => /.+@.+/.test(v) || 'E-mail must be valid',

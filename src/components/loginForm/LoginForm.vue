@@ -31,12 +31,18 @@
                   </v-form>
                 </v-card-text>
                 <v-card-text>
-                  Don’t have an account?
-                  <a @click="$emit('changeFormType', 'register')">Sign up</a>
+                  Нет аккаунта?
+                  <a @click="$emit('changeFormType', 'register')">Зарегистрироваться</a>
+                  <v-spacer></v-spacer>
+                  Забыли
+                  <a @click="$emit('changeFormType', 'recovery')"> пароль</a>?
+                </v-card-text>
+                <v-card-text>
+
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn class="white--text blue darken-1" to="/employees">Login</v-btn>
+                  <v-btn class="white--text blue darken-1" to="/employees">Войти</v-btn>
                 </v-card-actions>
               </v-card>
             </v-flex>

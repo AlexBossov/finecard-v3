@@ -7,9 +7,9 @@
 
     <div class="split right">
       <div style="margin-top: 20%">
-        <LoginForm v-if="formType === 'login'" v-on:changeFormType="changeFormType"/>
-        <RegisterForm v-if="formType === 'register'" v-on:changeFormType="changeFormType"/>
-        <RecoveryForm v-if="formType === 'recovery'"/>
+        <LoginForm v-if="formType === 'login'" @changeFormType="changeFormType"/>
+        <RegisterForm v-if="formType === 'register'" @changeFormType="changeFormType"/>
+        <RecoveryForm v-if="formType === 'recovery'" @changeFormType="changeFormType"/>
       </div>
     </div>
 

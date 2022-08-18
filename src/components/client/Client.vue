@@ -138,5 +138,6 @@ export default {
 .body {
   padding-left: 68px;
   padding-top: 20px;
+  padding-right: 68px;
 }
 </style>
