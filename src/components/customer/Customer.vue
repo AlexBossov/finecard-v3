@@ -5,7 +5,7 @@
     <div class="body">
       <v-data-table
           :headers="headers"
-          :items="clients"
+          :items="customers"
           :search="search"
           sort-by="clients"
           class="elevation-1"
@@ -36,18 +36,18 @@ import Navbar from "@/components/navbar/Navbar";
 import axios from "axios";
 
 export default {
-  name: "Client",
+  name: "Customer",
   components: {Navbar},
   data() {
     return {
       search: '',
       surnames: '',
-      clients: [],
+      customers: [],
       headers: [
-        {text: 'Номер телефона', value: 'number'},
-        {text: 'Дата первой покупки', value: 'firstPurchaseDate'},
-        {text: 'Дата последней покупки', value: 'lastPurchaseDate'},
-        {text: 'Текущее кол-во штампов', value: 'currentStampCount'},
+        {text: 'Номер телефона', value: 'phoneNumber'},
+        {text: 'Дата первой покупки', value: 'firstTimePurchase'},
+        {text: 'Дата последней покупки', value: 'lastTimePurchase'},
+        {text: 'Текущее кол-во штампов', value: 'countOfStamps'},
       ],
       emailRules: [
         v => !!v || 'E-mail обязателен',
@@ -85,7 +85,7 @@ export default {
           "Authorization": `Bearer ${localStorage.getItem('token')}`
         }
       })
-          .then(response => (this.locations = response.data));
+          .then(response => (this.customers = response.data));
       // this.clients = [
       //   {
       //     number: "+7-918-999-14-11",

@@ -4,7 +4,7 @@ import StartPage from '../components/startPage/StartPage.vue'
 import Location from '../components/location/Location.vue'
 import Employee from '../components/emloyee/Employee.vue'
 import Settings from '../components/settings/Settings.vue'
-import Client from '../components/client/Client.vue'
+import Customer from '../components/customer/Customer.vue'
 import Statistics from '../components/statistics/Statistics.vue'
 
 
@@ -34,7 +34,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/clients',
     name: 'client',
-    component: Client,
+    component: Customer,
   },
   {
     path: '/statistics',
