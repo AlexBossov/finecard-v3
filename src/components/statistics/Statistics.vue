@@ -9,7 +9,7 @@
         min-height="75vh"
 
     >
-      <v-card-text><h1>Новые клиенты</h1></v-card-text>
+      <v-card-text><h1>Количество клиентов</h1></v-card-text>
 
       <v-card-text>
         <v-sheet color="rgba(0, 0, 0, .12)" elevation="5" rounded>

@@ -20,13 +20,6 @@
                         required
                     />
                     <v-text-field
-                        v-model="number"
-                        :rules="numberRules"
-                        :counter="11"
-                        label="Номер телефона"
-                        required
-                    />
-                    <v-text-field
                         v-model="password"
                         :rules="passwordRules"
                         :counter="10"
@@ -39,7 +32,7 @@
                   <v-spacer></v-spacer>
                   <v-btn
                       class="white--text blue darken-1"
-                      @click="$emit('changeFormType', 'login'); register"
+                      @click="register"
                   >
                     Регистрация
                   </v-btn>
@@ -72,11 +65,6 @@ export default {
       emailRules: [
         v => !!v || 'E-mail обязателен',
         v => /.+@.+/.test(v) || 'E-mail должен быть вылидный',
-      ],
-      numberRules: [
-        v => !!v || 'Номер телефона обязателен',
-        v => v.length === 11 || 'Номер телефона должен состоять из 11 цифр',
-        v => /^\d+$/.test(v) || 'Телефон должен содержать только цифры',
       ]
     }
   },
@@ -86,6 +74,7 @@ export default {
         email: this.email,
         password: this.password
       });
+      this.$emit('changeFormType', 'login');
     }
   }
 }
