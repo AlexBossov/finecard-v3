@@ -37,7 +37,12 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn class="white--text blue darken-1" @click="$emit('changeFormType', 'login')">Регистрация</v-btn>
+                  <v-btn
+                      class="white--text blue darken-1"
+                      @click="$emit('changeFormType', 'login'); register"
+                  >
+                    Регистрация
+                  </v-btn>
                 </v-card-actions>
               </v-card>
             </v-flex>
@@ -50,6 +55,7 @@
 </template>
 
 <script>
+import axios from "axios";
 
 export default {
   name: "RegisterForm",
@@ -74,6 +80,14 @@ export default {
       ]
     }
   },
+  methods: {
+    register() {
+      axios.post('http://localhost:5005/api/Authenticate/register', {
+        email: this.email,
+        password: this.password
+      });
+    }
+  }
 }
 </script>
 

@@ -143,6 +143,7 @@
 
 <script>
 import Navbar from "@/components/navbar/Navbar";
+import axios from "axios";
 
 export default {
   name: "Location",
@@ -202,23 +203,29 @@ export default {
 
   methods: {
     initialize() {
-      this.locations = [
-        {
-          name: "Coffee Simple Лавровая",
-          address: "Лавровая улица",
-          paidTo: "11.12.2026",
-        },
-        {
-          name: "Coffee Simple Павлодарская",
-          address: "Павлодарская улица",
-          paidTo: "11.12.2026",
-        },
-        {
-          name: "Coffee Simple 43-я линия",
-          address: "43-я линия",
-          paidTo: "11.12.2026",
-        },
-      ]
+      axios.get('http://localhost:5005/api/Locations/' + localStorage.getItem('companyId'), {
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+          .then(response => (this.locations = response.data));
+      // this.locations = [
+      //   {
+      //     name: "Coffee Simple Лавровая",
+      //     address: "Лавровая улица",
+      //     paidTo: "11.12.2026",
+      //   },
+      //   {
+      //     name: "Coffee Simple Павлодарская",
+      //     address: "Павлодарская улица",
+      //     paidTo: "11.12.2026",
+      //   },
+      //   {
+      //     name: "Coffee Simple 43-я линия",
+      //     address: "43-я линия",
+      //     paidTo: "11.12.2026",
+      //   },
+      // ]
     },
 
     editItem(item) {

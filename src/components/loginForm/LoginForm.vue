@@ -37,12 +37,9 @@
                   Забыли
                   <a @click="$emit('changeFormType', 'recovery')"> пароль</a>?
                 </v-card-text>
-                <v-card-text>
-
-                </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn class="white--text blue darken-1" to="/employees">Войти</v-btn>
+                  <v-btn class="white&#45;&#45;text blue darken-1" @click="login" to="/employees">Войти</v-btn>
                 </v-card-actions>
               </v-card>
             </v-flex>
@@ -54,6 +51,7 @@
 </template>
 
 <script>
+import axios from "axios";
 
 export default {
   name: "LoginForm",
@@ -61,6 +59,7 @@ export default {
     return {
       email: '',
       password: '',
+      lol: null,
       valid: false,
       passwordRules: [
         v => !!v || 'Пароль обязателен',
@@ -72,6 +71,17 @@ export default {
       ],
     }
   },
+  methods: {
+    async login() {
+      await axios.post('http://localhost:5005/api/Authenticate/login', {
+        email: this.email,
+        password: this.password
+      }).then(response => {
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('companyId', response.data.companyId);
+      })
+    }
+  }
 }
 </script>
 

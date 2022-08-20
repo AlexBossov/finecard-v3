@@ -15,6 +15,10 @@
           <v-icon class="white--text">{{ link.icon }}</v-icon>
           <v-list-item class="white--text">{{ link.text }}</v-list-item>
         </v-list-item>
+        <v-list-item>
+          <v-icon class="white--text"> {{icon}} </v-icon>
+          <v-list-item class="white--text" @click="logout">Выйти из аккаунта</v-list-item>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
   </nav>
@@ -41,10 +45,18 @@ export default {
         {icon: mdiHomeGroup, text: 'Локации', route: '/locations'},
         {icon: mdiAccount, text: 'Сотрудники', route: '/employees'},
         {icon: mdiTuneVariant, text: 'Настройки', route: '/settings'},
-        {icon: mdiExitToApp, text: 'Выйти из аккаунта', route: '/finecard'},
       ],
+      icon: mdiExitToApp,
+      link: '/finecard'
     }
   },
+  methods: {
+    logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('companyId');
+      this.$router.push('/finecard')
+    }
+  }
 }
 </script>
 

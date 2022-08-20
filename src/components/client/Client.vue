@@ -33,6 +33,7 @@
 
 <script>
 import Navbar from "@/components/navbar/Navbar";
+import axios from "axios";
 
 export default {
   name: "Client",
@@ -79,56 +80,43 @@ export default {
 
   methods: {
     initialize() {
-          this.clients = [
-            {
-              number: "+7-918-999-14-11",
-              firstPurchaseDate: "02.01.2022",
-              lastPurchaseDate: "11.07.2022",
-              currentStampCount: "0",
-            },
-            {
-              number: "+7-919-546-42-24",
-              firstPurchaseDate: "04.01.2022",
-              lastPurchaseDate: "11.07.2022",
-              currentStampCount: "1",
-            },
-            {
-              number: "+7-919-234-53-12",
-              firstPurchaseDate: "13.01.2022",
-              lastPurchaseDate: "11.07.2022",
-              currentStampCount: "4",
-            },
-            {
-              number: "+7-918-456-86-16",
-              firstPurchaseDate: "13.01.2022",
-              lastPurchaseDate: "11.07.2022",
-              currentStampCount: "2",
-            },
-            {
-              number: "+7-919-345-63-78",
-              firstPurchaseDate: "02.01.2022",
-              lastPurchaseDate: "11.07.2022",
-              currentStampCount: "3",
-            },
-            {
-              number: "+7-918-677-35-32",
-              firstPurchaseDate: "02.01.2022",
-              lastPurchaseDate: "13.07.2022",
-              currentStampCount: "1",
-            },
-            {
-              number: "+7-919-235-23-00",
-              firstPurchaseDate: "02.01.2022",
-              lastPurchaseDate: "11.07.2022",
-              currentStampCount: "4",
-            },
-            {
-              number: "+7-918-357-00-00",
-              firstPurchaseDate: "02.01.2022",
-              lastPurchaseDate: "04.07.2022",
-              currentStampCount: "2",
-            },
-          ]
+      axios.get('http://localhost:5005/api/Customer/' + localStorage.getItem('companyId'), {
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+          .then(response => (this.locations = response.data));
+      // this.clients = [
+      //   {
+      //     number: "+7-918-999-14-11",
+      //     firstPurchaseDate: "02.01.2022",
+      //     lastPurchaseDate: "11.07.2022",
+      //     currentStampCount: "0",
+      //   },
+      //   {
+      //     number: "+7-919-546-42-24",
+      //     firstPurchaseDate: "04.01.2022",
+      //     lastPurchaseDate: "11.07.2022",
+      //     currentStampCount: "1",
+      //   },
+      //   {
+      //     number: "+7-919-234-53-12",
+      //     firstPurchaseDate: "13.01.2022",
+      //     lastPurchaseDate: "11.07.2022",
+      //     currentStampCount: "4",
+      //   {
+      //     number: "+7-919-235-23-00",
+      //     firstPurchaseDate: "02.01.2022",
+      //     lastPurchaseDate: "11.07.2022",
+      //     currentStampCount: "4",
+      //   },
+      //   {
+      //     number: "+7-918-357-00-00",
+      //     firstPurchaseDate: "02.01.2022",
+      //     lastPurchaseDate: "04.07.2022",
+      //     currentStampCount: "2",
+      //   },
+      // ]
     },
   },
 }
