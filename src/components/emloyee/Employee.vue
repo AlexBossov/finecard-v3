@@ -170,16 +170,12 @@
           </v-btn>
         </template>
       </v-data-table>
-      <br>
-      <br>
-      <v-card>{{ getToken }}</v-card>
     </div>
   </div>
 </template>
 
 <script>
 import Navbar from "@/components/navbar/Navbar";
-import {mapGetters} from "vuex";
 
 import axios from "axios";
 
@@ -203,7 +199,7 @@ export default {
         {text: 'Фамилия', value: 'surname'},
         {text: 'Почта', value: 'email'},
         {text: 'Локация', value: 'location'},
-        {text: 'Должность', value: 'post'},
+        {text: 'Должность', value: 'position'},
         {text: '', value: 'actions', sortable: false},
       ],
       emailRules: [
@@ -255,66 +251,7 @@ export default {
         headers: {
           "Authorization": `Bearer ${localStorage.getItem('token')}`
         }
-      })
-          .then(response => (this.employees = response.data));
-      // this.employees = [
-      //   {
-      //     name: "Alex",
-      //     surname: "Bosov",
-      //     email: "s.bosov2015@yandex.ru",
-      //     location: "43-я линия",
-      //     post: "Директор",
-      //   },
-      //   {
-      //     name: "Anna",
-      //     surname: "Bosova",
-      //     email: "annbosova@mail.com",
-      //     location: "43-я линия",
-      //     post: "Зам директора",
-      //   },
-      //   {
-      //     name: "Kostya",
-      //     surname: "Adr",
-      //     email: "dontworry@yandex.ru",
-      //     location: "Лавровая улица",
-      //     post: "Менеджер",
-      //   },
-      //   {
-      //     name: "Rostik",
-      //     surname: "Rem",
-      //     email: "behappy@yandex.ru",
-      //     location: "Павлодарская улица",
-      //     post: "Сотрудник",
-      //   },
-      //   {
-      //     name: "Oleg",
-      //     surname: "kek",
-      //     email: "lol@gmail.com",
-      //     location: "Павлодарская улица",
-      //     post: "Сотрудник",
-      //   },
-      //   {
-      //     name: "Olga",
-      //     surname: "Ivanova",
-      //     email: "intresting@yandex.ru",
-      //     location: "Павлодарская улица",
-      //     post: "Сотрудник",
-      //   },
-      //   {
-      //     name: "Kirill",
-      //     surname: "DeBill",
-      //     email: "kira@yandex.ru",
-      //     location: "Лавровая улица",
-      //     post: "Уборщик",
-      //   },
-      //   {
-      //     name: "Igor",
-      //     surname: "Nisovich",
-      //     email: "egor@yandex.ru",
-      //     location: "Лавровая улица",
-      //     post: "Сотрудник",
-      //   },
-      // ]
+      }).then(response => (this.employees = response.data));
     },
 
     editItem(item) {

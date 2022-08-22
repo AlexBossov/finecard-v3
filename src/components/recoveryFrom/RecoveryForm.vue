@@ -18,13 +18,18 @@
                         :rules="emailRules"
                         label="E-mail"
                         required
+                        :class="{invalid: ($v.email.$dirty && !$v.email.required) || ($v.email.$dirty && !$v.email.email)}"
                     />
                   </v-form>
                 </v-card-text>
                 <v-card-text>Введите ваш email и мы отправим вам новый пароль</v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn class="white--text blue darken-1" @click="$emit('changeFormType', 'login')">Отправить</v-btn>
+                  <v-btn class="white--text blue darken-1"
+                         @click="recovery"
+                  >
+                    Отправить
+                  </v-btn>
                 </v-card-actions>
               </v-card>
             </v-flex>
@@ -37,20 +42,33 @@
 </template>
 
 <script>
+import {email, required} from 'vuelidate/lib/validators'
+
 
 export default {
   name: "RecoveryForm",
   data() {
     return {
       email: "bosov2012@yandex.ru",
-      password: "1234",
       valid: false,
       emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+/.test(v) || 'E-mail must be valid',
+        v => !!v || 'E-mail обязателен',
+        v => /.+@.+/.test(v) || 'E-mail должен быть вылидный',
       ]
     }
   },
+  validations: {
+    email: {email, required},
+  },
+  methods: {
+    recovery() {
+      if (this.$v.$invalid) {
+        this.$v.$touch()
+        return
+      }
+      this.$emit('changeFormType', 'login')
+    }
+  }
 }
 </script>
 

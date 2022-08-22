@@ -20,13 +20,17 @@
                         :rules="emailRules"
                         label="E-mail"
                         required
+                        :class="{invalid: ($v.email.$dirty && !$v.email.required) || ($v.email.$dirty && !$v.email.email)}"
                     />
                     <v-text-field
                         v-model="password"
                         :rules="passwordRules"
-                        :counter="10"
+                        :counter="15"
                         label="Пароль"
                         required
+                        :class="{invalid: ($v.password.$dirty && !$v.password.required)
+                                  || ($v.password.$dirty && !$v.password.minLength)
+                                  || ($v.password.$dirty && !$v.password.maxLength)}"
                     />
                   </v-form>
                 </v-card-text>
@@ -39,7 +43,7 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn class="white&#45;&#45;text blue darken-1" @click="login">Войти</v-btn>
+                  <v-btn class="white--text blue darken-1" @click="login">Войти</v-btn>
                 </v-card-actions>
               </v-card>
             </v-flex>
@@ -51,7 +55,9 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
+import {email, required, minLength, maxLength} from 'vuelidate/lib/validators'
+
 
 export default {
   name: "LoginForm",
@@ -71,8 +77,16 @@ export default {
       ],
     }
   },
+  validations: {
+    email: {email, required},
+    password: {required, minLength: minLength(6), maxLength: maxLength(15)},
+  },
   methods: {
     async login() {
+      if (this.$v.$invalid) {
+        this.$v.$touch()
+        return
+      }
       await axios.post('http://localhost:5005/api/Authenticate/login', {
         email: this.email,
         password: this.password

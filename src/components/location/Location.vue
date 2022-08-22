@@ -158,7 +158,7 @@ export default {
       headers: [
         {text: 'Название', value: 'name'},
         {text: 'Адрес', value: 'address'},
-        {text: 'Оплачено до', value: 'paidTo'},
+        {text: 'Оплачено до', value: 'payUpDate'},
         {text: '', value: 'actions', sortable: false},
 
       ],
@@ -207,25 +207,7 @@ export default {
         headers: {
           "Authorization": `Bearer ${localStorage.getItem('token')}`
         }
-      })
-          .then(response => (this.locations = response.data));
-      // this.locations = [
-      //   {
-      //     name: "Coffee Simple Лавровая",
-      //     address: "Лавровая улица",
-      //     paidTo: "11.12.2026",
-      //   },
-      //   {
-      //     name: "Coffee Simple Павлодарская",
-      //     address: "Павлодарская улица",
-      //     paidTo: "11.12.2026",
-      //   },
-      //   {
-      //     name: "Coffee Simple 43-я линия",
-      //     address: "43-я линия",
-      //     paidTo: "11.12.2026",
-      //   },
-      // ]
+      }).then(response => (this.locations = response.data));
     },
 
     editItem(item) {
