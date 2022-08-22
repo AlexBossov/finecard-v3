@@ -39,7 +39,7 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn class="white&#45;&#45;text blue darken-1" @click="login" to="/employees">Войти</v-btn>
+                  <v-btn class="white&#45;&#45;text blue darken-1" @click="login">Войти</v-btn>
                 </v-card-actions>
               </v-card>
             </v-flex>
@@ -77,8 +77,9 @@ export default {
         email: this.email,
         password: this.password
       }).then(response => {
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('companyId', response.data.companyId);
+        localStorage.setItem('token', response.data.token)
+        localStorage.setItem('companyId', response.data.companyId)
+        this.$router.push('/employees')
       })
     }
   }
