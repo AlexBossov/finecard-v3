@@ -267,7 +267,12 @@ export default {
     },
 
     deleteItemConfirm() {
-      this.employees.splice(this.editedIndex, 1)
+      console.log(this.employees[this.editedIndex])
+      axios.delete('http://localhost:5005/api/Employee/' + this.employees[this.editedIndex].id, {
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem('token')}`
+        }
+      }).then(this.initialize)
       this.closeDelete()
     },
 
@@ -318,7 +323,8 @@ export default {
             headers: {
               "Authorization": `Bearer ${localStorage.getItem('token')}`
             }
-          }).catch(er => console.log(er))
+          }
+        ).then(_ => this.initialize()).catch(er => console.log(er))
         });
       }
       this.close()
