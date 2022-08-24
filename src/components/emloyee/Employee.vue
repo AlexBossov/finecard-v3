@@ -92,7 +92,7 @@
                           md="4"
                       >
                         <v-text-field
-                            v-model="editedItem.location"
+                            v-model="editedItem.locationName"
                             label="Локация"
                             :rules="requiredRules"
                             clearable
@@ -105,7 +105,7 @@
                           md="4"
                       >
                         <v-text-field
-                            v-model="editedItem.post"
+                            v-model="editedItem.position"
                             label="Должность"
                             :rules="requiredRules"
                             clearable
@@ -198,7 +198,7 @@ export default {
         },
         {text: 'Фамилия', value: 'surname'},
         {text: 'Почта', value: 'email'},
-        {text: 'Локация', value: 'location'},
+        {text: 'Локация', value: 'location.name'},
         {text: 'Должность', value: 'position'},
         {text: '', value: 'actions', sortable: false},
       ],
@@ -214,15 +214,15 @@ export default {
         name: "",
         surname: "",
         email: "",
-        location: "",
-        post: "",
+        locationName: "",
+        position: "",
       },
       defaultItem: {
         name: "",
         surname: "",
         email: "",
-        location: "",
-        post: "",
+        locationName: "",
+        position: "",
       },
     }
   },
@@ -291,7 +291,35 @@ export default {
       if (this.editedIndex > -1) {
         Object.assign(this.employees[this.editedIndex], this.editedItem)
       } else {
-        this.employees.push(this.editedItem)
+        const employee = {
+          name: this.editedItem.name,
+          surname: this.editedItem.surname,
+          email: this.editedItem.email,
+          position: this.editedItem.position,
+          companyId: localStorage.getItem('companyId')
+        }
+
+        axios.get('http://localhost:5005/api/Locations/'
+            + localStorage.getItem('companyId')
+            + '/getByName/'
+            + this.editedItem.locationName, {
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+          }
+        }).then(response => {
+          axios.post('http://localhost:5005/api/Employee', {
+            "name": employee.name,
+            "surname": employee.surname,
+            "companyId": employee.companyId,
+            "email": employee.email,
+            "position": employee.position,
+            "locationId":  response.data.id,
+          }, {
+            headers: {
+              "Authorization": `Bearer ${localStorage.getItem('token')}`
+            }
+          }).catch(er => console.log(er))
+        });
       }
       this.close()
     },
