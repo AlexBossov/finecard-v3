@@ -144,6 +144,8 @@
 <script>
 import Navbar from "@/components/navbar/Navbar";
 import axios from "axios";
+import moment from "moment";
+
 
 export default {
   name: "Location",
@@ -173,12 +175,12 @@ export default {
       editedItem: {
         name: "",
         address: "",
-        paidTo: "",
+        payUpDate: "",
       },
       defaultItem: {
         name: "",
         address: "",
-        paidTo: "",
+        payUpDate: "",
       },
     }
   },
@@ -207,7 +209,14 @@ export default {
         headers: {
           "Authorization": `Bearer ${localStorage.getItem('token')}`
         }
-      }).then(response => (this.locations = response.data));
+      }).then(response => {
+        this.locations = response.data
+        this.locations.map(location => {
+          location.payUpDate = moment(location.payUpDate).utc().format('DD.MM.YYYY')
+          if (location.payUpDate === '31.12.0000')
+            location.payUpDate = 'Не оплачено'
+        })
+      });
     },
 
     editItem(item) {
@@ -223,7 +232,11 @@ export default {
     },
 
     deleteItemConfirm() {
-      this.locations.splice(this.editedIndex, 1)
+      axios.delete('http://localhost:5005/api/Locations/' + this.locations[this.editedIndex].id, {
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem('token')}`
+        }
+      }).then(this.initialize)
       this.closeDelete()
     },
 
@@ -247,8 +260,15 @@ export default {
       if (this.editedIndex > -1) {
         Object.assign(this.locations[this.editedIndex], this.editedItem)
       } else {
-        this.editedItem.paidTo = "Еще не оплачено"
-        this.locations.push(this.editedItem)
+        axios.post('http://localhost:5005/api/Locations/', {
+          name: this.editedItem.name,
+          address: this.editedItem.address,
+          companyId: localStorage.getItem('companyId'),
+        }, {
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+          }
+        }).then(this.initialize)
       }
       this.close()
     },

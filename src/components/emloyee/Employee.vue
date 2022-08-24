@@ -257,6 +257,7 @@ export default {
     editItem(item) {
       this.editedIndex = this.employees.indexOf(item)
       this.editedItem = Object.assign({}, item)
+      this.editedItem.locationName = item.location.name
       this.dialog = true
     },
 
@@ -294,7 +295,7 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.employees[this.editedIndex], this.editedItem)
+       // TODO: how put item??
       } else {
         const employee = {
           name: this.editedItem.name,
@@ -313,20 +314,45 @@ export default {
           }
         }).then(response => {
           axios.post('http://localhost:5005/api/Employee', {
-            "name": employee.name,
-            "surname": employee.surname,
-            "companyId": employee.companyId,
-            "email": employee.email,
-            "position": employee.position,
-            "locationId":  response.data.id,
-          }, {
-            headers: {
-              "Authorization": `Bearer ${localStorage.getItem('token')}`
-            }
-          }
-        ).then(_ => this.initialize()).catch(er => console.log(er))
+                "name": employee.name,
+                "surname": employee.surname,
+                "companyId": employee.companyId,
+                "email": employee.email,
+                "position": employee.position,
+                "locationId": response.data.id,
+              }, {
+                headers: {
+                  "Authorization": `Bearer ${localStorage.getItem('token')}`
+                }
+              }
+          ).then(_ => {
+            this.initialize()
+            this.$swal({
+              icon: 'success',
+              title: 'Сотрудник успешно добавлен',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }).catch(er => {
+            console.log(er)
+            this.$swal({
+              icon: 'error',
+              title: 'Произошла ошибка при добавлении сотрудника',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          })
+        }).catch(er => {
+          console.log(er)
+          this.$swal({
+            icon: 'error',
+            title: 'Произошла ошибка при добавлении сотрудника',
+            showConfirmButton: false,
+            timer: 1500
+          })
         });
       }
+
       this.close()
     },
   },
