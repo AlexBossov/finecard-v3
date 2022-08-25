@@ -37,6 +37,7 @@
 
 <script>
 import {maxLength, minLength, required} from "vuelidate/lib/validators";
+import axios from "axios";
 
 export default {
   name: "SettingsPasswordCard",
@@ -57,7 +58,7 @@ export default {
     newPassword: {required, minLength: minLength(6), maxLength: maxLength(15)},
   },
   methods: {
-    save() {
+    async save() {
       if (this.$v.$invalid) {
         this.$v.$touch()
         this.$swal({
@@ -68,14 +69,35 @@ export default {
         })
         return
       }
-      this.$swal({
-        icon: 'success',
-        title: 'Пароль успешно изменен',
-        showConfirmButton: false,
-        timer: 1500
+
+      await axios.post('http://localhost:5005/api/Authenticate/change-password', {
+            "companyId": localStorage.getItem('companyId'),
+            "oldPassword": this.oldPassword,
+            "newPassword": this.newPassword,
+          }, {
+            headers: {
+              "Authorization": `Bearer ${localStorage.getItem('token')}`
+            }
+          }
+      ).then(_ => {
+        this.$swal({
+          icon: 'success',
+          title: 'Пароль успешно изменен',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.oldPassword = ''
+        this.newPassword = ''
+      }).catch(_ => {
+        this.$swal({
+          icon: 'error',
+          title: 'Произошла ошибка при изменении пароля',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.oldPassword = ''
+        this.newPassword = ''
       })
-      this.oldPassword = ''
-      this.newPassword = ''
     }
   }
 }
