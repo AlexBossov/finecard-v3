@@ -58,6 +58,7 @@
                             :rules="requiredRules"
                             clearable
                             required
+                            :class="{invalid: ($v.editedItem.name.$dirty && !$v.editedItem.name.required)}"
                         ></v-text-field>
                       </v-col>
                       <v-col
@@ -71,6 +72,7 @@
                             :rules="requiredRules"
                             clearable
                             required
+                            :class="{invalid: ($v.editedItem.surname.$dirty && !$v.editedItem.surname.required)}"
                         ></v-text-field>
                       </v-col>
                       <v-col
@@ -84,6 +86,8 @@
                             :rules="emailRules"
                             clearable
                             required
+                            :class="{invalid: ($v.editedItem.email.$dirty && !$v.editedItem.email.required)
+                            || ($v.editedItem.email.$dirty && !$v.editedItem.email.email)}"
                         ></v-text-field>
                       </v-col>
                       <v-col
@@ -97,6 +101,7 @@
                             :rules="requiredRules"
                             clearable
                             required
+                            :class="{invalid: ($v.editedItem.locationName.$dirty && !$v.editedItem.locationName.required)}"
                         ></v-text-field>
                       </v-col>
                       <v-col
@@ -110,6 +115,7 @@
                             :rules="requiredRules"
                             clearable
                             required
+                            :class="{invalid: ($v.editedItem.position.$dirty && !$v.editedItem.position.required)}"
                         ></v-text-field>
                       </v-col>
                     </v-row>
@@ -178,6 +184,7 @@
 import Navbar from "@/components/navbar/Navbar";
 
 import axios from "axios";
+import {email, required} from "vuelidate/lib/validators";
 
 export default {
   name: "Employee",
@@ -190,12 +197,7 @@ export default {
       dialogDelete: false,
       employees: [],
       headers: [
-        {
-          text: 'Имя',
-          align: 'start',
-          sortable: false,
-          value: 'name',
-        },
+        {text: 'Имя', align: 'start', value: 'name', sortable: false},
         {text: 'Фамилия', value: 'surname'},
         {text: 'Почта', value: 'email'},
         {text: 'Локация', value: 'location.name'},
@@ -204,7 +206,7 @@ export default {
       ],
       emailRules: [
         v => !!v || 'E-mail обязателен',
-        v => /.+@.+/.test(v) || 'E-mail должен быть настоящий',
+        v => /.+@.+\./.test(v) || 'E-mail должен быть настоящий',
       ],
       requiredRules: [
         v => !!v || 'Поле обязательно'
@@ -224,6 +226,25 @@ export default {
         locationName: "",
         position: "",
       },
+    }
+  },
+  validations: {
+    editedItem: {
+      name: {
+        required
+      },
+      surname: {
+        required
+      },
+      email: {
+        email, required
+      },
+      locationName: {
+        required
+      },
+      position: {
+        required
+      }
     }
   },
   computed: {
@@ -294,8 +315,18 @@ export default {
     },
 
     save() {
+      if (this.$v.$invalid) {
+        this.$v.$touch()
+        this.$swal({
+          icon: 'error',
+          title: 'Зполните все поля правильно',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        return
+      }
       if (this.editedIndex > -1) {
-       // TODO: how put item??
+        // TODO: how put item??
       } else {
         const employee = {
           name: this.editedItem.name,
@@ -352,7 +383,6 @@ export default {
           })
         });
       }
-
       this.close()
     },
   },

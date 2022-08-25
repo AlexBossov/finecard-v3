@@ -18,6 +18,7 @@
                         :rules="emailRules"
                         label="E-mail"
                         required
+                        clearable
                         :class="{invalid: ($v.email.$dirty && !$v.email.required) || ($v.email.$dirty && !$v.email.email)}"
                     />
                     <v-text-field
@@ -26,6 +27,7 @@
                         :counter="15"
                         label="Пароль"
                         required
+                        clearable
                         :class="{invalid: ($v.password.$dirty && !$v.password.required)
                                   || ($v.password.$dirty && !$v.password.minLength)
                                   || ($v.password.$dirty && !$v.password.maxLength)}"
