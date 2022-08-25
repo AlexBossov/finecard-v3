@@ -7,9 +7,9 @@
             v-model="oldPassword"
             :rules="passwordRules"
             :counter="15"
-            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-            :type="show1 ? 'text' : 'password'"
-            @click:append="show1 = !show1"
+            :append-icon="showOldPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="showOldPassword ? 'text' : 'password'"
+            @click:append="showOldPassword = !showOldPassword"
             label="Сатрый пароль"
             :class="{invalid: ($v.oldPassword.$dirty && !$v.oldPassword.required)
                                   || ($v.oldPassword.$dirty && !$v.oldPassword.minLength)
@@ -19,9 +19,9 @@
             v-model="newPassword"
             :rules="passwordRules"
             :counter="15"
-            :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-            :type="show2 ? 'text' : 'password'"
-            @click:append="show2 = !show2"
+            :append-icon="showNewPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="showNewPassword ? 'text' : 'password'"
+            @click:append="showNewPassword = !showNewPassword"
             label="Новый пароль"
             :class="{invalid: ($v.newPassword.$dirty && !$v.newPassword.required)
                                   || ($v.newPassword.$dirty && !$v.newPassword.minLength)
@@ -45,8 +45,8 @@ export default {
     return {
       oldPassword: '',
       newPassword: '',
-      show1: false,
-      show2: false,
+      showOldPassword: false,
+      showNewPassword: false,
       passwordRules: [
         v => v.length >= 6 || 'Пароль должен быть больше 5 символов',
         v => v.length <= 15 || 'Пароль должен быть меньше 16 символов',
