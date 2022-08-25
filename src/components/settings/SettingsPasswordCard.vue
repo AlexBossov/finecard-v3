@@ -4,24 +4,80 @@
     <v-card-text>
       <v-form>
         <v-text-field
-            label="Старый пароль"
-            clearable
+            v-model="oldPassword"
+            :rules="passwordRules"
+            :counter="15"
+            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="show1 ? 'text' : 'password'"
+            @click:append="show1 = !show1"
+            label="Сатрый пароль"
+            :class="{invalid: ($v.oldPassword.$dirty && !$v.oldPassword.required)
+                                  || ($v.oldPassword.$dirty && !$v.oldPassword.minLength)
+                                  || ($v.oldPassword.$dirty && !$v.oldPassword.maxLength)}"
         />
         <v-text-field
+            v-model="newPassword"
+            :rules="passwordRules"
+            :counter="15"
+            :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="show2 ? 'text' : 'password'"
+            @click:append="show2 = !show2"
             label="Новый пароль"
-            clearable
+            :class="{invalid: ($v.newPassword.$dirty && !$v.newPassword.required)
+                                  || ($v.newPassword.$dirty && !$v.newPassword.minLength)
+                                  || ($v.newPassword.$dirty && !$v.newPassword.maxLength)}"
         />
       </v-form>
     </v-card-text>
     <v-card-actions>
-      <v-btn style="background-color: #63C7B2; margin-left: 6px">Сохранить</v-btn>
+      <v-btn style="background-color: #63C7B2; margin-left: 6px" @click="save">Сохранить</v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import {maxLength, minLength, required} from "vuelidate/lib/validators";
+
 export default {
-  name: "SettingsPasswordCard"
+  name: "SettingsPasswordCard",
+  data() {
+    return {
+      oldPassword: '',
+      newPassword: '',
+      show1: false,
+      show2: false,
+      passwordRules: [
+        v => v.length >= 6 || 'Пароль должен быть больше 5 символов',
+        v => v.length <= 15 || 'Пароль должен быть меньше 16 символов',
+      ],
+    }
+  },
+  validations: {
+    oldPassword: {required, minLength: minLength(6), maxLength: maxLength(15)},
+    newPassword: {required, minLength: minLength(6), maxLength: maxLength(15)},
+  },
+  methods: {
+    save() {
+      if (this.$v.$invalid) {
+        this.$v.$touch()
+        this.$swal({
+          icon: 'error',
+          title: 'Зполните все поля правильно',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        return
+      }
+      this.$swal({
+        icon: 'success',
+        title: 'Пароль успешно изменен',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      this.oldPassword = ''
+      this.newPassword = ''
+    }
+  }
 }
 </script>
 
