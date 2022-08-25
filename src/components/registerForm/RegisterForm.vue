@@ -32,6 +32,10 @@
                     />
                   </v-form>
                 </v-card-text>
+                <v-card-text>
+                  Есть аккаунт?
+                  <a @click="$emit('changeFormType', 'login')">Войти</a>
+                </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn
@@ -66,12 +70,13 @@ export default {
       valid: false,
       passwordRules: [
         v => !!v || 'Пароль обязателен',
-        v => v.length >= 6 || 'Пароль должен быть больше 6 символов',
+        v => v.length >= 6 || 'Пароль должен быть больше 5 символов',
+        v => v.length <= 15 || 'Пароль должен быть меньше 16 символов',
       ],
       emailRules: [
         v => !!v || 'E-mail обязателен',
-        v => /.+@.+/.test(v) || 'E-mail должен быть вылидный',
-      ]
+        v => /.+@.+\./.test(v) || 'E-mail должен быть настоящий',
+      ],
     }
   },
   validations: {

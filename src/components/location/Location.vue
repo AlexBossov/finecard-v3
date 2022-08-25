@@ -236,7 +236,12 @@ export default {
         headers: {
           "Authorization": `Bearer ${localStorage.getItem('token')}`
         }
-      }).then(this.initialize)
+      }).then(this.initialize, this.$swal({
+        icon: 'success',
+        title: 'Локация успешно удалена',
+        showConfirmButton: false,
+        timer: 1500
+      }))
       this.closeDelete()
     },
 
@@ -268,7 +273,12 @@ export default {
           headers: {
             "Authorization": `Bearer ${localStorage.getItem('token')}`
           }
-        }).then(this.initialize)
+        }).then(this.initialize, this.$swal({
+          icon: 'success',
+          title: 'Локация успешно добавлена',
+          showConfirmButton: false,
+          timer: 1500
+        }))
       }
       this.close()
     },
