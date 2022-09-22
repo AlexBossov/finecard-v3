@@ -57,6 +57,7 @@
                             :rules="requiredRules"
                             clearable
                             required
+                            :class="{invalid: ($v.editedItem.name.$dirty && !$v.editedItem.name.required)}"
                         ></v-text-field>
                       </v-col>
                       <v-col
@@ -70,6 +71,7 @@
                             :rules="requiredRules"
                             clearable
                             required
+                            :class="{invalid: ($v.editedItem.address.$dirty && !$v.editedItem.address.required)}"
                         ></v-text-field>
                       </v-col>
                       <v-col
@@ -145,6 +147,7 @@
 import Navbar from "@/components/navbar/Navbar";
 import axios from "axios";
 import moment from "moment";
+import {required} from "vuelidate/lib/validators";
 
 
 export default {
@@ -166,7 +169,7 @@ export default {
       ],
       emailRules: [
         v => !!v || 'E-mail обязателен',
-        v => /.+@.+/.test(v) || 'E-mail должен быть настоящий',
+        v => /.+@.+\./.test(v) || 'E-mail должен быть настоящий',
       ],
       requiredRules: [
         v => !!v || 'Поле обязательно'
@@ -184,6 +187,18 @@ export default {
       },
     }
   },
+
+  validations: {
+    editedItem: {
+      name: {
+        required
+      },
+      address: {
+        required
+      }
+    }
+  },
+
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? 'Добавить новую локацию' : 'Редактировать локацию'
@@ -262,6 +277,16 @@ export default {
     },
 
     save() {
+      if (this.$v.$invalid) {
+        this.$v.$touch()
+        this.$swal({
+          icon: 'error',
+          title: 'Зполните все поля правильно',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        return
+      }
       if (this.editedIndex > -1) {
         Object.assign(this.locations[this.editedIndex], this.editedItem)
       } else {

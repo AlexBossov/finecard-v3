@@ -28,6 +28,9 @@
                         :counter="15"
                         label="Пароль"
                         required
+                        :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                        :type="showPassword ? 'text' : 'password'"
+                        @click:append="showPassword = !showPassword"
                         :class="{invalid: ($v.password.$dirty && !$v.password.required)
                                   || ($v.password.$dirty && !$v.password.minLength)
                                   || ($v.password.$dirty && !$v.password.maxLength)}"
@@ -65,7 +68,7 @@ export default {
     return {
       email: '',
       password: '',
-      lol: null,
+      showPassword: false,
       valid: false,
       passwordRules: [
         v => !!v || 'Пароль обязателен',

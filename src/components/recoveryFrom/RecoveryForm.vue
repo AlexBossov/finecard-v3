@@ -18,6 +18,7 @@
                         :rules="emailRules"
                         label="E-mail"
                         required
+                        clearable
                         :class="{invalid: ($v.email.$dirty && !$v.email.required) || ($v.email.$dirty && !$v.email.email)}"
                     />
                   </v-form>
@@ -53,8 +54,8 @@ export default {
       valid: false,
       emailRules: [
         v => !!v || 'E-mail обязателен',
-        v => /.+@.+/.test(v) || 'E-mail должен быть вылидный',
-      ]
+        v => /.+@.+\./.test(v) || 'E-mail должен быть настоящий',
+      ],
     }
   },
   validations: {

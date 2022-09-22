@@ -12,17 +12,21 @@
                   <v-spacer></v-spacer>
                 </v-toolbar>
                 <v-card-text>
-                  <v-form v-model="valid">
+                  <v-form>
                     <v-text-field
                         v-model="email"
                         :rules="emailRules"
                         label="E-mail"
                         required
+                        clearable
                         :class="{invalid: ($v.email.$dirty && !$v.email.required) || ($v.email.$dirty && !$v.email.email)}"
                     />
                     <v-text-field
                         v-model="password"
                         :rules="passwordRules"
+                        :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                        :type="showPassword ? 'text' : 'password'"
+                        @click:append="showPassword = !showPassword"
                         :counter="15"
                         label="Пароль"
                         required
@@ -67,7 +71,7 @@ export default {
       email: '',
       password: '',
       number: '',
-      valid: false,
+      showPassword: false,
       passwordRules: [
         v => !!v || 'Пароль обязателен',
         v => v.length >= 6 || 'Пароль должен быть больше 5 символов',
